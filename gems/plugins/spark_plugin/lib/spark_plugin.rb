@@ -1,9 +1,5 @@
-require 'version.rb'
+require 'version'
+require 'spark_plugin/engine'
 
 module SparkPlugin
-
-  def self.enable_spark_button()
-    return '<button class="btn btn-primary enable-spark">Enable Spark</button>'
-  end
-
 end

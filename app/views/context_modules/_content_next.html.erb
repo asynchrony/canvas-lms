@@ -42,7 +42,7 @@
       </span>
     <% end %>
     <% if @can_edit %>
-      <%=raw SparkPlugin::enable_spark_button()%>
+      <%= button_to "Enable Spark Test", { action: "enable_spark", controller: "spark_plugin", id: @context.id }, method: :post %>
       <button class="btn btn-primary add_module_link">
         <i class="icon-plus" role="presentation"></i>
         <span class="screenreader-only">Add</span>
