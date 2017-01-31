@@ -1,10 +1,13 @@
 version: '2'
 services:
   canvas:
+#    build: .
     image: asynchronyringo/canvaslms
-    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    command: bash -c "bundle exec rake db:create && bundle exec rake db:initial_setup && bundle exec rake canvas:compile_assets"
     ports:
       - "3000:3000"
+    volumes:
+      - ./public/dist:/var/canvas/public/dist
     env_file:
       - vars.env
     depends_on:

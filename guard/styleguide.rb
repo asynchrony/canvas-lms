@@ -17,7 +17,7 @@ module Guard
     end
 
     def create_styleguide
-      puts `dress_code config/styleguide.yml`
+      # puts `dress_code config/styleguide.yml`
     end
   end
 end
