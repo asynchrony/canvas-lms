@@ -42,9 +42,7 @@
       </span>
     <% end %>
     <% if @can_edit %>
-      <button class="btn btn-primary enable-spark">
-        Enable Spark
-      </button>
+      <%=raw SparkPlugin::enable_spark_button()%>
       <button class="btn btn-primary add_module_link">
         <i class="icon-plus" role="presentation"></i>
         <span class="screenreader-only">Add</span>
