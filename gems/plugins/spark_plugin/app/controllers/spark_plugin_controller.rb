@@ -29,8 +29,10 @@ class SparkPluginController < ApplicationController
   end
 
   def response_message(code)
-    return "Failed to enable Spark for #{course_code}" unless code == 200
-    "Spark has been enabled for #{code}"
+    status_code = code.to_i
+    return "Processing enablement of Spark for #{course_code}, please refresh momentarily" if status_code == 202
+    return "Spark has been enabled for #{course_code}" if (status_code >= 200 && status_code < 300)
+    "Failed to enable Spark for #{course_code} (error code #{status_code})"
   end
 
   def michelangelo_url
@@ -38,7 +40,7 @@ class SparkPluginController < ApplicationController
   end
 
   def permitted_params
-    strong_params.require(:course).permit(:email, :course_code)
+    strong_params.require(:course).permit(:course_code)
   end
 
 end
