@@ -1,3 +1,3 @@
 CanvasRails::Application.routes.draw do
-  post "courses/:id/enable-spark", controller: "spark_plugin", to: :enable_spark
+  post "courses/:id/enable-spark" => "spark_plugin#enable_spark", as: "enable_spark"
 end
