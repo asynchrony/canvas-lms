@@ -7,7 +7,7 @@ require 'version.rb'
 Gem::Specification.new do |s|
   s.name          = 'spark_plugin'
   s.version       = SparkPlugin::VERSION
-  s.authors       = ['Ringo']
+  s.authors       = ['Apple Research']
   s.email         = ['apple-research@asynchrony.com']
   s.description   = 'Integrate Cisco Spark with Canvas LMS'
   s.summary       = 'Integrate Cisco Spark with Canvas LMS'

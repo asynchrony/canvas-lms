@@ -79,3 +79,4 @@ npm-debug.log
 
 # user docker compose overrides
 docker-compose.local.*
+vars.env
