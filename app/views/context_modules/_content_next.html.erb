@@ -42,6 +42,10 @@
       </span>
     <% end %>
     <% if @can_edit %>
+      <%= form_tag({ controller: "spark_plugin", action: "enable_spark", id: @context.id,  method: "post" }, style: "display: inline-block; margin: 0px") do %>
+        <%= hidden_field :course, :course_code, value: @context.course_code %>
+        <%= submit_tag "Enable Spark", class: "btn btn-primary" %>
+      <% end %>
       <button class="btn btn-primary add_module_link">
         <i class="icon-plus" role="presentation"></i>
         <span class="screenreader-only">Add</span>
