@@ -1,7 +1,7 @@
 development: &default
   adapter: postgresql
   encoding: utf8
-  database: <%= ENV["POSGRES_DEV_DB"] %>
+  database: <%= ENV["POSTGRES_DEV_DB"] %>
   timeout: 5000
   username: <%= ENV["POSTGRES_USER"] %>
   password: <%= ENV["POSTGRES_PASSWORD"] %>

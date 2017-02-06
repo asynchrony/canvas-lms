@@ -1,19 +1,22 @@
 version: '2'
 services:
   canvas:
-#    build: .
     image: asynchronyringo/canvaslms
-    command: bash -c "bundle exec rake db:create && bundle exec rake db:initial_setup && bundle exec rake canvas:compile_assets"
+    command: bash -c "bundle exec rake db:create && bundle exec rake db:initial_setup"
     ports:
       - "3000:3000"
-    volumes:
-      - ./public/dist:/var/canvas/public/dist
     env_file:
-      - vars.env
+      - common.env
+      - canvas.env
     depends_on:
       - db
       - redis
   db:
     image: postgres:9.3
+    env_file:
+      - common.env
+      - db.env
+    volumes:
+      - ./data:/var/lib/postgresql/data/canvaslms
   redis:
     image: redis:3
