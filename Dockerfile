@@ -54,9 +54,6 @@ RUN chown -R docker:9999 .
 RUN chmod 775 gems/canvas_i18nliner
 RUN chmod 775 . log tmp gems/selinimum gems/canvas_i18nliner
 RUN chmod 664 ./app/stylesheets/_brand_variables.scss
-RUN ln -s ${APP_HOME}script/canvas_init /etc/init.d/canvas_init
-RUN update-rc.d canvas_init defaults
-RUN /etc/init.d/canvas_init start
 
 USER docker
 RUN bundle exec rake canvas:compile_assets
