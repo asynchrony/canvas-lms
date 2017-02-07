@@ -1,16 +1,23 @@
+require 'jwt'
+
 class SparkPluginController < ApplicationController
   def enable_spark
     http = Net::HTTP.new(spark_service_url.host, spark_service_url.port)
     http.use_ssl = true
     response = http.post(
       spark_service_url.path,
-      JSON.dump(spark_params),
+      JSON.dump(jwt),
       'Content-type' => 'application/json',
       'Accept' => 'text/json, application/json')
 
     respond_to do |format|
       format.html { redirect_to :back, notice: response_message(response.code) }
     end
+  end
+
+  def jwt
+    jwt = JWT.encode(spark_params, ENV['JWT_SECRET'], 'HS512')
+    { jwt: jwt }
   end
 
   def spark_params
