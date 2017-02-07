@@ -1,8 +1,9 @@
 class SparkPluginController < ApplicationController
   def enable_spark
-    http = Net::HTTP.new(michelangelo_url.host, michelangelo_url.port)
+    http = Net::HTTP.new(spark_service_url.host, spark_service_url.port)
+    http.use_ssl = true
     response = http.post(
-      michelangelo_url.path,
+      spark_service_url.path,
       JSON.dump(spark_params),
       'Content-type' => 'application/json',
       'Accept' => 'text/json, application/json')
@@ -35,8 +36,8 @@ class SparkPluginController < ApplicationController
     "Failed to enable Spark for #{course_code} (error code #{status_code})"
   end
 
-  def michelangelo_url
-    URI.parse("#{ENV['MICHELANGELO_URL']}/canvas/enable-spark")
+  def spark_service_url
+    URI.parse("#{ENV['SPARK_SERVICE_URL']}/canvas/enable-spark")
   end
 
   def permitted_params
