@@ -6,7 +6,8 @@ class SparkPluginController < ApplicationController
     http.use_ssl = true
     response = http.post(
       spark_service_url.path,
-      JSON.dump(jwt),
+      JSON.dump(spark_params),
+      'Authorization' => 'Bearer ' + jwt,
       'Content-type' => 'application/json',
       'Accept' => 'text/json, application/json')
 
@@ -16,8 +17,13 @@ class SparkPluginController < ApplicationController
   end
 
   def jwt
-    jwt = JWT.encode(spark_params, ENV['JWT_SECRET'], 'HS512')
-    { jwt: jwt }
+    expiry = Time.zone.now + 5.minutes.to_i
+    body = {
+      sub: user_email,
+      iss: ENV['SPARK_JWT_ISS'],
+      jti: SecureRandom.uuid
+    }
+    Canvas::Security.create_jwt(body, expiry, ENV['SPARK_JWT_SECRET'])
   end
 
   def spark_params
