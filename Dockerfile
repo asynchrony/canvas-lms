@@ -63,3 +63,4 @@ COPY custom_docker/outgoing_mail.yml config/outgoing_mail.yml
 COPY custom_docker/domain.yml config/domain.yml
 COPY custom_docker/security.yml config/security.yml
 COPY custom_docker/cache_store.yml config/cache_store.yml
+COPY custom_docker/delayed_jobs.yml config/delayed_jobs.yml

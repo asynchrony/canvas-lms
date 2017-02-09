@@ -11,6 +11,15 @@ services:
     depends_on:
       - db
       - redis
+  jobs:
+    command: bundle exec script/delayed_job run
+    image: asynchronyringo/canvaslms
+    env_file:
+      - common.env
+      - canvas.env
+    depends_on:
+      - db
+      - redis
   db:
     image: postgres:9.3
     env_file:
