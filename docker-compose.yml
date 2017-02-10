@@ -29,3 +29,12 @@ services:
       - ./data:/var/lib/postgresql/data/canvaslms
   redis:
     image: redis:3
+  mail:
+    image: elsdoerfer/exim-sender
+    dns: # Docker's DNS is not compatible with Exim
+      - 8.8.8.8
+      - 4.4.4.4
+    environment:
+      ALLOWED_HOSTS: "*"
+    env_file:
+      - mail.env
