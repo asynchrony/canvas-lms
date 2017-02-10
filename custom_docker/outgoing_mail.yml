@@ -13,11 +13,11 @@ test:
   delivery_method: "test"
 
 production:
-  address: <%= ENV["CANVAS_SMTP_HOST"] %>
-  port: <%= ENV["CANVAS_SMTP_PORT"] || "25" %>
-  user_name: ""
-  password: ""
-  authentication: "plain" # plain, login, or cram_md5
+  address: "mail" #"<%= ENV["CANVAS_SMTP_HOST"] %>"
+  port: "<%= ENV["CANVAS_SMTP_PORT"] || "25" %>"
+  # user_name: ""
+  # password: ""
+  # authentication: "plain" # plain, login, or cram_md5
   domain: <%= ENV["DOMAIN"] %>
   outgoing_address: <%= "donotreply@" + ENV["DOMAIN"] %>
   default_name: "Canvas"
