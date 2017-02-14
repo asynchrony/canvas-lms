@@ -126,6 +126,13 @@
           aria-label="<%= t('Add Content to %{module_name}', {module_name: context_module ? context_module.name : 'module'}) %>"
           rel="<%= context_url(@context, :context_url) %>/modules/<%= context_module ? context_module.id : "{{ id }}" %>/items"
           class="add_module_item_link btn"><i class="icon-plus"></i><span class="screenreader-only"><%= t('Add Content to %{module_name}', {module_name: context_module ? context_module.name : 'module'}) %></span></button>
+        <% # BEGIN ASYNCHRONY CHANGES %>
+        <% if (context_module && @context) %>
+          <%= form_tag({ controller: "spark_plugin", action: "import_whiteboard", course_id: @context.id, module_id: context_module.id, method: "post" }, style: "display: inline-block; margin: 0px") do %>
+            <%= submit_tag "Import Whiteboard", class: "btn btn-primary" %>
+          <% end %>
+        <% end %>
+        <% # END ASYNCHRONY CHANGES %>
         <button class="btn al-trigger" aria-label="<%= t('Manage %{module_name}', {module_name: context_module ? context_module.name : 'module'})  %>">
           <i class="icon-settings"></i><i class="icon-mini-arrow-down"></i>
         </button>
