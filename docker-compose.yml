@@ -8,8 +8,6 @@ services:
     env_file:
       - common.env
       - canvas.env
-    environment:
-      CANVAS_SMTP_HOST: "mail"
     depends_on:
       - db
       - redis
