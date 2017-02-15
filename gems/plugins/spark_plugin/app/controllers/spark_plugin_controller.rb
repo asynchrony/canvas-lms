@@ -16,6 +16,21 @@ class SparkPluginController < ApplicationController
     end
   end
 
+  def render_enable_spark_button
+    http = Net::HTTP.new(spark_service_url.host, spark_service_url.port)
+    http.use_ssl = true
+    response = http.get(
+      spark_service_url.path,
+      'Authorization' => 'Bearer ' + jwt,
+      'Content-type' => 'application/json',
+      'Accept' => 'text/json, application/json')
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
+
   def jwt
     expiry = Time.zone.now + 5.minutes.to_i
     body = {

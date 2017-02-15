@@ -349,6 +349,7 @@ class ContextModulesApiController < ApplicationController
   #
   # @returns [Module]
   def index
+    # maybe here?
     if authorized_action(@context, @current_user, :read)
       route = polymorphic_url([:api_v1, @context, :context_modules])
       scope = @context.modules_visible_to(@student || @current_user)
@@ -416,6 +417,7 @@ class ContextModulesApiController < ApplicationController
   def show
     if authorized_action(@context, @current_user, :read)
       mod = @context.modules_visible_to(@student || @current_user).find(params[:id])
+      # Maybe here?
       includes = Array(params[:include])
       ActiveRecord::Associations::Preloader.new.preload(mod, content_tags: :content) if includes.include?('items')
       prog = @student ? mod.evaluate_for(@student) : nil
