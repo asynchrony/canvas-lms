@@ -10,6 +10,27 @@ class SparkPluginController < ApplicationController
     post_to_spark_service("whiteboard-snapshot", import_whiteboard_params);
   end
 
+  def render_enable_spark_button
+    @course_id = course_id
+    @course_code = Course.find(@course_id).course_code
+
+    http = Net::HTTP.new(spark_service_url.host, spark_service_url.port)
+    http.use_ssl = true
+
+    response = JSON.parse(http.get(
+    "#{spark_service_url.path}enable-spark/#{@course_id}",
+    'Authorization' => 'Bearer ' + jwt,
+    'Content-type' => 'application/json',
+    'Accept' => 'text/json, application/json').body)
+
+    @can_enable = false
+    @can_enable = !response["enabled"] unless response["enabled"].nil?
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
   def post_to_spark_service(endpoint, body)
     http = Net::HTTP.new(spark_service_url.host, spark_service_url.port)
     http.use_ssl = true

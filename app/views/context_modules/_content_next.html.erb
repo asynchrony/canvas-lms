@@ -42,12 +42,34 @@
       </span>
     <% end %>
     <% if @can_edit %>
-      <% # BEGIN ASYNCHRONY CHANGES %>
-      <%= form_tag({ controller: "spark_plugin", action: "enable_spark", course_id: @context.id,  method: "post" }, style: "display: inline-block; margin: 0px") do %>
-        <%= hidden_field :course, :course_code, value: @context.course_code %>
-        <%= submit_tag "Enable Spark", class: "btn btn-primary" %>
-      <% end %>
-      <% # END ASYNCHRONY CHANGES %>
+      <!-- BEGIN ASYNCHRONY CHANGES -->
+      <span id="enable_spark_button"></span>
+      <script>
+        document.addEventListener("DOMContentLoaded", function(event) {
+          ajax({
+            type: "GET",
+            url: window.location.pathname + "/enable-spark-button"
+          });
+        });
+
+        function ajax(options){
+          var xhr = new window.XMLHttpRequest();
+
+          var script = document.createElement('script');
+          document.head.appendChild(script);
+
+          xhr.onreadystatechange = function(){
+            if (xhr.readyState === 4 && xhr.status === 200) {
+              script.text = xhr.responseText;
+            }
+          };
+
+          xhr.open(options.type, options.url, true);
+          xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+          xhr.send();
+        }
+      </script>
+      <!-- END ASYNCHRONY CHANGES -->
       <button class="btn btn-primary add_module_link">
         <i class="icon-plus" role="presentation"></i>
         <span class="screenreader-only">Add</span>
