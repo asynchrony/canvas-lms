@@ -14,4 +14,6 @@ Gem::Specification.new do |s|
 
   s.files = Dir['{app,config,db,lib}/**/*'] + ['README.md']
   s.test_files = Dir["spec_canvas/**/*"]
+
+  s.add_dependency "jwt", "~> 1.2.1"
 end
