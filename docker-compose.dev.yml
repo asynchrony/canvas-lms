@@ -1,0 +1,42 @@
+version: '2'
+services:
+  canvas:
+    image: asynchronyringo/canvaslms
+    command: bash -c "./node_modules/.bin/brandable_css && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./app:/usr/src/app/app
+      - ./gems/plugins/spark_plugin:/usr/src/app/gems/plugins/spark_plugin
+    env_file:
+      - common.env
+      - canvas.env
+    depends_on:
+      - db
+      - redis
+  jobs:
+    command: bundle exec script/delayed_job run
+    image: asynchronyringo/canvaslms
+    env_file:
+      - common.env
+      - canvas.env
+    depends_on:
+      - db
+      - redis
+  db:
+    image: postgres:9.3
+    env_file:
+      - common.env
+      - db.env
+    volumes:
+      - ./data:/var/lib/postgresql/data/canvaslms
+  redis:
+    image: redis:3
+  mail:
+    image: elsdoerfer/exim-sender
+    expose:
+      - "25"
+    environment:
+      ALLOWED_HOSTS: "*"
+    env_file:
+      - mail.env
