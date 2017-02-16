@@ -80,3 +80,9 @@ npm-debug.log
 # user docker compose overrides
 docker-compose.local.*
 *.env
+
+# data folder
+/data/
+
+# ruby version
+.ruby-version
