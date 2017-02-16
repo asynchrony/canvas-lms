@@ -57,6 +57,7 @@ RUN chmod 664 ./app/stylesheets/_brand_variables.scss
 
 USER docker
 RUN bundle exec rake canvas:compile_assets
+RUN ./node_modules/.bin/brandable_css
 
 COPY custom_docker/database.yml config/database.yml
 COPY custom_docker/outgoing_mail.yml config/outgoing_mail.yml
