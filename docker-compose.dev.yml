@@ -8,6 +8,12 @@ services:
     volumes:
       - ./app:/usr/src/app/app
       - ./gems/plugins/spark_plugin:/usr/src/app/gems/plugins/spark_plugin
+      - ./custom_docker/cache_store.yml:/usr/src/app/config/cache_store.yml
+      - ./custom_docker/database.yml:/usr/src/app/config/database.yml
+      - ./custom_docker/delayed_jobs.yml:/usr/src/app/config/delayed_jobs.yml
+      - ./custom_docker/domain.yml:/usr/src/app/config/domain.yml
+      - ./custom_docker/outgoing_mail.yml:/usr/src/app/config/outgoing_mail.yml
+      - ./custom_docker/security.yml:/usr/src/app/config/security.yml
     env_file:
       - common.env
       - canvas.env
