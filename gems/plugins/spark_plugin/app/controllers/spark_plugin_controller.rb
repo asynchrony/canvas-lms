@@ -15,7 +15,7 @@ class SparkPluginController < ApplicationController
     @course_code = Course.find(@course_id).course_code
 
     http = Net::HTTP.new(spark_service_url.host, spark_service_url.port)
-    http.use_ssl = true
+    http.use_ssl = true if Rails.env.production?
 
     response = JSON.parse(http.get(
     "#{spark_service_url.path}enable-spark/#{@course_id}",
@@ -33,7 +33,7 @@ class SparkPluginController < ApplicationController
 
   def post_to_spark_service(endpoint, body)
     http = Net::HTTP.new(spark_service_url.host, spark_service_url.port)
-    http.use_ssl = true
+    http.use_ssl = true if Rails.env.production?
     response = http.post(
       "#{spark_service_url.path}#{endpoint}",
       JSON.dump(body),
