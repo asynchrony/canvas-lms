@@ -2,7 +2,7 @@ version: '2'
 services:
   canvas:
     image: asynchronyringo/canvaslms
-    command: bash -c "bundle exec rake db:create && bundle exec rake db:initial_setup && ./node_modules/.bin/brandable_css && bundle exec unicorn -p 3000 -c config/unicorn.rb"
+    command: bash -c "./wait-for-it.sh -t 60 db:5432 -- bundle exec rake db:create && bundle exec rake db:initial_setup && ./node_modules/.bin/brandable_css && bundle exec unicorn -p 3000 -c config/unicorn.rb"
     ports:
       - "3000:3000"
     volumes:
@@ -21,7 +21,7 @@ services:
       - db
       - redis
   jobs:
-    command: bundle exec script/delayed_job run
+    command: bash -c "./wait-for-it.sh -t 60 db:5432 -- bundle exec script/delayed_job run"
     image: asynchronyringo/canvaslms
     env_file:
       - common.env
