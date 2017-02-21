@@ -12,7 +12,7 @@ services:
       - db
       - redis
   jobs:
-    command: bash -c "./wait-for-it.sh -t 60 db:5432 -- bundle exec script/delayed_job run"
+    command: bash -c "./wait-for-it.sh -t 60 db:5432 -- sleep 60 && bundle exec script/delayed_job run"
     image: asynchronyringo/canvaslms
     env_file:
       - common.env
