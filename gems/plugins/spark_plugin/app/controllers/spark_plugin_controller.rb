@@ -10,6 +10,10 @@ class SparkPluginController < ApplicationController
     post_to_spark_service("whiteboard-snapshot", import_whiteboard_params);
   end
 
+  def disable_spark
+    delete_from_spark_service("enable-spark", disable_spark_params);
+  end
+
   def render_enable_spark_button
     @course_id = course_id
     @course_code = Course.find(@course_id).course_code
@@ -28,6 +32,21 @@ class SparkPluginController < ApplicationController
 
     respond_to do |format|
       format.js
+    end
+  end
+
+  def delete_from_spark_service(endpoint, params)
+    http = Net::HTTP.new(spark_service_url.host, spark_service_url.port)
+    http.use_ssl = true if Rails.env.production?
+
+    response = http.delete(
+      "#{spark_service_url.path}#{endpoint}/#{params[:courseId]}",
+      'Authorization' => 'Bearer ' + jwt,
+      'Content-type' => 'application/json',
+      'Accept' => 'text/json, application/json')
+
+    respond_to do |format|
+      format.html { redirect_to :back, notice: response_message(response.code)}
     end
   end
 
@@ -58,6 +77,10 @@ class SparkPluginController < ApplicationController
 
   def enable_spark_params
     { courseId: course_id, courseCode: course_code, email: user_email }
+  end
+
+  def disable_spark_params
+    { courseId: course_id }
   end
 
   def import_whiteboard_params

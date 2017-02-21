@@ -4,5 +4,8 @@
     <%= submit_tag "Enable Spark", class: "btn btn-primary" %>
   <% end %>
 <% else %>
-  <button class="btn btn-primary" disabled>Enable Spark</button>
+  <%= form_tag({ controller: "spark_plugin", action: "disable_spark", course_id: course_id,  method: "post" }, style: "display: inline-block; margin: 0px") do %>
+    <%= hidden_field :course, :course_code, value: course_code %>
+    <%= submit_tag "Disable Spark", class: "btn btn-primary" %>
+  <% end %>
 <% end %>
