@@ -66,6 +66,3 @@ COPY custom_docker/cache_store.yml config/cache_store.yml
 COPY custom_docker/delayed_jobs.yml config/delayed_jobs.yml
 COPY custom_docker/unicorn.rb config/unicorn.rb
 COPY custom_docker/wait-for-it.sh wait-for-it.sh
-
-RUN ln -sf /dev/stdout /usr/src/app/log/production.log
-RUN ln -sf /dev/stdout /usr/src/app/log/development.log
