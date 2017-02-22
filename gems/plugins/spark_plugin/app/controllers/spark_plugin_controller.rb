@@ -76,7 +76,7 @@ class SparkPluginController < ApplicationController
   end
 
   def enable_spark_params
-    { courseId: course_id, courseCode: course_code, email: user_email }
+    { courseId: course_id, courseCode: course_code }
   end
 
   def disable_spark_params
