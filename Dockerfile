@@ -66,3 +66,4 @@ COPY custom_docker/cache_store.yml config/cache_store.yml
 COPY custom_docker/delayed_jobs.yml config/delayed_jobs.yml
 COPY custom_docker/unicorn.rb config/unicorn.rb
 COPY custom_docker/wait-for-it.sh wait-for-it.sh
+COPY custom_docker/start_canvas.rb start_canvas.rb
