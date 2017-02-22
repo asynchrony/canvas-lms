@@ -14,6 +14,8 @@ services:
       - ./custom_docker/domain.yml:/usr/src/app/config/domain.yml
       - ./custom_docker/outgoing_mail.yml:/usr/src/app/config/outgoing_mail.yml
       - ./custom_docker/security.yml:/usr/src/app/config/security.yml
+    environment:
+      UNICORN_PROCESSES: 4 
     env_file:
       - common.env
       - canvas.env

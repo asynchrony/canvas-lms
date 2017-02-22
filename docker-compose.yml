@@ -5,6 +5,8 @@ services:
     command: bash -c "./wait-for-it.sh -t 60 db:5432 -- bundle exec rake db:create && bundle exec rake db:initial_setup && bundle exec unicorn -p 3000 -c config/unicorn.rb"
     ports:
       - "3000:3000"
+    environment:
+      UNICORN_PROCESSES: 4
     env_file:
       - common.env
       - canvas.env
