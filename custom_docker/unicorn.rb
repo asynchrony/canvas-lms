@@ -7,7 +7,7 @@
 # a more verbose configuration using more features.
 
 # listen 2007 # by default Unicorn listens on port 8080
-worker_processes ENV["UNICORN_PROCESSES"] # this should be >= nr_cpus
+worker_processes ENV["UNICORN_PROCESSES"].to_i # this should be >= nr_cpus
 pid "/usr/src/app/unicorn.pid"
 stderr_path "/usr/src/app/log/unicorn.log"
 stdout_path "/usr/src/app/log/unicorn.log"
