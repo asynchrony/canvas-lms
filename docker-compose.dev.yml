@@ -2,19 +2,14 @@ version: '2'
 services:
   canvas:
     image: asynchronyringo/canvaslms
-    command: ./start_canvas.rb
+    command: script/start_canvas.rb
     ports:
       - "3000:3000"
     volumes:
       - ./app:/usr/src/app/app
       - ./gems/plugins/spark_plugin:/usr/src/app/gems/plugins/spark_plugin
-      - ./custom_docker/cache_store.yml:/usr/src/app/config/cache_store.yml
-      - ./custom_docker/database.yml:/usr/src/app/config/database.yml
-      - ./custom_docker/delayed_jobs.yml:/usr/src/app/config/delayed_jobs.yml
-      - ./custom_docker/domain.yml:/usr/src/app/config/domain.yml
-      - ./custom_docker/outgoing_mail.yml:/usr/src/app/config/outgoing_mail.yml
-      - ./custom_docker/security.yml:/usr/src/app/config/security.yml
-      - ./custom_docker/start_canvas.rb:/usr/src/app/start_canvas.rb
+      - ./config/:/usr/src/app/config/
+      - ./script:/usr/src/app/script/
     environment:
       UNICORN_PROCESSES: 4
     env_file:
@@ -24,7 +19,7 @@ services:
       - db
       - redis
   jobs:
-    command: bash -c "./wait-for-it.sh -t 60 db:5432 -- sleep 60 && bundle exec script/delayed_job run"
+    command: bash -c "script/wait-for-it.sh -t 60 db:5432 -- sleep 60 && bundle exec script/delayed_job run"
     image: asynchronyringo/canvaslms
     env_file:
       - common.env

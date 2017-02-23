@@ -2,7 +2,7 @@ version: '2'
 services:
   canvas:
     image: asynchronyringo/canvaslms
-    command: ./start_canvas.rb
+    command: script/start_canvas.rb
     ports:
       - "3000:3000"
     environment:
@@ -14,7 +14,7 @@ services:
       - db
       - redis
   jobs:
-    command: bash -c "./wait-for-it.sh -t 60 db:5432 -- sleep 60 && bundle exec script/delayed_job run"
+    command: bash -c "script/wait-for-it.sh -t 60 db:5432 -- sleep 60 && bundle exec script/delayed_job run"
     image: asynchronyringo/canvaslms
     env_file:
       - common.env

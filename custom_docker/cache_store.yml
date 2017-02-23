@@ -1,6 +1,0 @@
-test:
-  cache_store: <%= ENV["CACHE_STORE"] %>
-development:
-  cache_store: <%= ENV["CACHE_STORE"] %>
-production:
-  cache_store: <%= ENV["CACHE_STORE"] %>

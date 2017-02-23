@@ -1,21 +1,7 @@
-.DS_Store
-.dockerignore
-.git
-.gitignore
-.idea
-
-docker-compose/
-!docker-compose/config/*
-docker-compose.local.*.yml
-docker-compose.override.yml
-docker-compose.yml
-
 client_apps/canvas_quizzes/dist/
-client_apps/canvas_quizzes/node_modules/
 client_apps/canvas_quizzes/tmp/
-gems/canvas_i18nliner/node_modules/
+config/*.yml.example
 log/
-node_modules/
 public/dist/
 public/doc/
 public/javascripts/client_apps/
@@ -31,8 +17,18 @@ spec/javascripts/compiled/
 spec/javascripts/webpack/
 tmp/
 vendor/bundle/
+docker-compose.*
 Dockerfile
 mkmf.log
+.codeclimate.yml
+.editorconfig
+.eslint*
+.git*
+.jshintrc
+.stylelintrc
+.travis.yml
+karma.conf.js
 
-# Gemfile.lock
-vars.env
+*.md
+*.env
+**/node_modules/

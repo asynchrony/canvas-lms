@@ -32,38 +32,30 @@ RUN if [ -e /var/lib/gems/$RUBY_MAJOR.0/gems/bundler-* ]; then BUNDLER_INSTALL="
 
 WORKDIR $APP_HOME
 USER root
-COPY Gemfile      ${APP_HOME}
-COPY Gemfile.d    ${APP_HOME}Gemfile.d
-COPY config       ${APP_HOME}config
-COPY gems         ${APP_HOME}gems
+COPY Gemfile ./
+COPY Gemfile.d/app.rb ./Gemfile.d/
+COPY config/canvas_rails5.rb config/
 RUN bundle install
-COPY package.json ${APP_HOME}
+COPY package.json \
+     .npmrc \
+     .nvmrc \
+     ./
 RUN npm install
-COPY . $APP_HOME
+
+COPY . ./
+RUN bundle update
 RUN mkdir -p log \
-            tmp \
-            public/javascripts/client_apps \
-            public/dist \
-            public/assets \
-  && chown -R docker:docker ${APP_HOME} /home/docker
-
-
-RUN touch mkmf.log .listen_test
-RUN chmod 777 mkmf.log .listen_test
-RUN chown -R docker:9999 .
-RUN chmod 775 gems/canvas_i18nliner
-RUN chmod 775 . log tmp gems/selinimum gems/canvas_i18nliner
-RUN chmod 664 ./app/stylesheets/_brand_variables.scss
+    tmp \
+    public/javascripts/client_apps \
+    public/dist \
+    public/assets && \
+    chown -R docker:docker . /home/docker && \
+    touch mkmf.log .listen_test && \
+    chmod 777 mkmf.log .listen_test && \
+    chown -R docker:9999 . && \
+    chmod 775 gems/canvas_i18nliner && \
+    chmod 775 . log tmp gems/selinimum gems/canvas_i18nliner && \
+    chmod 664 ./app/stylesheets/_brand_variables.scss
 
 USER docker
 RUN bundle exec rake canvas:compile_assets
-
-COPY custom_docker/database.yml config/database.yml
-COPY custom_docker/outgoing_mail.yml config/outgoing_mail.yml
-COPY custom_docker/domain.yml config/domain.yml
-COPY custom_docker/security.yml config/security.yml
-COPY custom_docker/cache_store.yml config/cache_store.yml
-COPY custom_docker/delayed_jobs.yml config/delayed_jobs.yml
-COPY custom_docker/unicorn.rb config/unicorn.rb
-COPY custom_docker/wait-for-it.sh wait-for-it.sh
-COPY custom_docker/start_canvas.rb start_canvas.rb
