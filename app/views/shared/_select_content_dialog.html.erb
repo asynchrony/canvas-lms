@@ -32,6 +32,11 @@
         <% if !only || only.include?(:external_tools) %>
         <option value="context_external_tool" class="context_module_content"><%= t :external_tool_item, "External Tool" %></option>
         <% end %>
+        <% # BEGIN ASYNCHRONY CHANGES %>
+        <% if !only || only.include?(:whiteboard_snapshots) %>
+        <option value="whiteboard_snapshot" class="context_module_content">Whiteboard Snapshot</option>
+        <% end %>
+        <% # BEGIN ASYNCHRONY CHANGES %>
       </select>
       <% }, :wrapper => '<span class="holder_name">\1</span>' %>
     </div>
@@ -267,6 +272,14 @@
         </div>
       </div>
       <% end %>
+      <% # BEGIN ASYNCHRONY CHANGES %>
+      <% if !only || only.include?(:whiteboard_snapshots) %>
+      <% #eventually this should be pulling a content area created by the plugin, eg: render partial: 'spark_plugin/import_whiteboard_selection_area', locals: { context: @context, context_module: context_module } %>
+      <div id="whiteboard_snapshots_select" class="module_item_option" style="margin-bottom: 5px; ">
+        An image of the most recently created whiteboard will be added to the course
+      </div>
+      <% end %>
+      <% # END ASYNCHRONY CHANGES %>
       <% if !only || only.include?(:indentation) %>
       <div class="context_module_content">
         <%= before_label :indentation, "Indentation" %>

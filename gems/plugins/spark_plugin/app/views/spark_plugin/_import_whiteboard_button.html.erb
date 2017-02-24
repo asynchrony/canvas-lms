@@ -1,5 +1,0 @@
-<% if (context_module && context) %>
-  <%= form_tag({ controller: "spark_plugin", action: "import_whiteboard", course_id: context.id, module_id: context_module.id, method: "post" }, style: "display: inline-block; margin: 0px") do %>
-    <%= submit_tag "Import Whiteboard", class: "btn btn-primary" %>
-  <% end %>
-<% end %>

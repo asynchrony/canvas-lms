@@ -1315,24 +1315,38 @@ define([
         };
         var nextPosition = modules.getNextPosition($module);
         options.submit = function(item_data) {
-          item_data.content_details = ['items']
-          item_data['item[position]'] = nextPosition++;
-          var $module = $("#context_module_" + id);
-          var $item = modules.addItemToModule($module, item_data);
-          $module.find(".context_module_items.ui-sortable").sortable('refresh').sortable('disable');
-          var url = $module.find(".add_module_item_link").attr('rel');
-          $module.disableWhileLoading(
-            $.ajaxJSON(url, 'POST', item_data, function(data) {
-              $item.remove();
-              data.content_tag.type = item_data['item[type]'];
-              $item = modules.addItemToModule($module, data.content_tag);
-              $module.find(".context_module_items.ui-sortable").sortable('enable').sortable('refresh');
-              initNewItemPublishButton($item, data.content_tag);
-              modules.updateAssignmentData();
-            }), { onComplete: function() {
-              $module.find('.add_module_item_link').focus();
-            }}
-          );
+          // BEGIN ASYNCHRONY CHANGES
+          // Changed the submit to do something special for whiteboard_snapshot and put the regular code into the else
+          if (item_data['item[type]'] === 'whiteboard_snapshot') {
+            var $module = $("#context_module_" + id);
+            $module.disableWhileLoading(
+              $.ajaxJSON('modules/' + id + '/import-whiteboard', 'POST', {}, function() {
+                window.location.reload();
+              })
+            );
+          } else {
+          // END ASYNCHRONY CHANGES
+            item_data.content_details = ['items']
+            item_data['item[position]'] = nextPosition++;
+            var $module = $("#context_module_" + id);
+            var $item = modules.addItemToModule($module, item_data);
+            $module.find(".context_module_items.ui-sortable").sortable('refresh').sortable('disable');
+            var url = $module.find(".add_module_item_link").attr('rel');
+            $module.disableWhileLoading(
+                $.ajaxJSON(url, 'POST', item_data, function(data) {
+                  $item.remove();
+                  data.content_tag.type = item_data['item[type]'];
+                  $item = modules.addItemToModule($module, data.content_tag);
+                  $module.find(".context_module_items.ui-sortable").sortable('enable').sortable('refresh');
+                  initNewItemPublishButton($item, data.content_tag);
+                  modules.updateAssignmentData();
+                }), { onComplete: function() {
+                  $module.find('.add_module_item_link').focus();
+                }}
+            );
+          // BEGIN ASYNCHRONY CHANGES
+          }
+          // END ASYNCHRONY CHANGES
         };
         INST.selectContentDialog(options);
       }

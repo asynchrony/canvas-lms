@@ -62,6 +62,7 @@ class SparkPluginController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to :back, notice: response_message(response.code)}
+      format.json { render json: { status: response.code } }
     end
   end
 
