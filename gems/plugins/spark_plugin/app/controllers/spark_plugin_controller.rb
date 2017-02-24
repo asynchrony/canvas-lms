@@ -85,7 +85,7 @@ class SparkPluginController < ApplicationController
   end
 
   def import_whiteboard_params
-    { courseId: course_id, moduleId: module_id }
+    { courseId: course_id, moduleId: module_id, indent: indent }
   end
 
   def course_code
@@ -102,6 +102,10 @@ class SparkPluginController < ApplicationController
 
   def module_id
     params[:module_id]
+  end
+
+  def indent
+    params[:indent]
   end
 
   def response_message(code)

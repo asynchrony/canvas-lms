@@ -1320,7 +1320,7 @@ define([
           if (item_data['item[type]'] === 'whiteboard_snapshot') {
             var $module = $("#context_module_" + id);
             $module.disableWhileLoading(
-              $.ajaxJSON('modules/' + id + '/import-whiteboard', 'POST', {}, function() {
+              $.ajaxJSON('modules/' + id + '/import-whiteboard', 'POST', { indent: item_data['item[indent]'] }, function() {
                 window.location.reload();
               })
             );
