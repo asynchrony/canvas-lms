@@ -257,6 +257,7 @@ define([
           submit(item_data);
         }
       } else if(item_type == 'context_external_tool') {
+
         var tool = $("#context_external_tools_select .tools .tool.selected").data('tool');
         var tool_type = 'context_external_tool';
         var tool_id = 0;
