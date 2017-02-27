@@ -10,7 +10,8 @@ services:
       - ./gems/plugins/spark_plugin:/usr/src/app/gems/plugins/spark_plugin
       - ./config/:/usr/src/app/config/
       - ./script:/usr/src/app/script/
-      - ./public/javascripts:/usr/src/app/public/javascripts/
+      - ./public/javascripts/context_modules.js:/usr/src/app/public/javascripts/context_modules.js
+      - ./public/javascripts/select_content_dialog.js:/usr/src/app/public/javascripts/select_content_dialog.js
     environment:
       UNICORN_PROCESSES: 4
     env_file:
