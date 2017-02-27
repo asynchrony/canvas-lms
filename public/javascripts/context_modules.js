@@ -1325,7 +1325,6 @@ define([
               })
             );
           } else {
-          // END ASYNCHRONY CHANGES
             item_data.content_details = ['items']
             item_data['item[position]'] = nextPosition++;
             var $module = $("#context_module_" + id);
@@ -1344,7 +1343,6 @@ define([
                   $module.find('.add_module_item_link').focus();
                 }}
             );
-          // BEGIN ASYNCHRONY CHANGES
           }
           // END ASYNCHRONY CHANGES
         };
