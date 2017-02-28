@@ -3,29 +3,25 @@ require 'jwt'
 class SparkPluginController < ApplicationController
 
   def enable_spark
-    post_to_spark_service("spark", enable_spark_params);
+    response = SparkService.create_spark(enable_spark_params, user_email)
+    handle_response(response)
   end
 
   def import_whiteboard
-    post_to_spark_service("whiteboard-snapshot", import_whiteboard_params);
+    response = SparkService.create_whiteboard_link(import_whiteboard_params, user_email)
+    handle_response(response)
   end
 
   def disable_spark
-    delete_from_spark_service("spark", disable_spark_params);
+    response = SparkService.delete_spark("spark", course_id, user_email)
+    handle_response(response)
   end
 
   def render_enable_spark_button
     @course_id = course_id
     @course_code = Course.find(@course_id).course_code
 
-    http = Net::HTTP.new(spark_service_url.host, spark_service_url.port)
-    http.use_ssl = true if Rails.env.production?
-
-    response = JSON.parse(http.get(
-    "#{spark_service_url.path}spark/#{@course_id}",
-    'Authorization' => 'Bearer ' + jwt,
-    'Content-type' => 'application/json',
-    'Accept' => 'text/json, application/json').body)
+    response = SparkService.get_spark(@course_id, user_email)
 
     @can_enable = false
     @can_enable = !response["enabled"] unless response["enabled"].nil?
@@ -33,32 +29,6 @@ class SparkPluginController < ApplicationController
     respond_to do |format|
       format.js
     end
-  end
-
-  def delete_from_spark_service(endpoint, params)
-    http = Net::HTTP.new(spark_service_url.host, spark_service_url.port)
-    http.use_ssl = true if Rails.env.production?
-
-    response = http.delete(
-      "#{spark_service_url.path}#{endpoint}/#{params[:courseId]}",
-      'Authorization' => 'Bearer ' + jwt,
-      'Content-type' => 'application/json',
-      'Accept' => 'text/json, application/json')
-
-    handle_response(response)
-  end
-
-  def post_to_spark_service(endpoint, body)
-    http = Net::HTTP.new(spark_service_url.host, spark_service_url.port)
-    http.use_ssl = true if Rails.env.production?
-    response = http.post(
-      "#{spark_service_url.path}#{endpoint}",
-      JSON.dump(body),
-      'Authorization' => 'Bearer ' + jwt,
-      'Content-type' => 'application/json',
-      'Accept' => 'text/json, application/json')
-
-    handle_response(response)
   end
 
   def handle_response(response)
@@ -77,22 +47,8 @@ class SparkPluginController < ApplicationController
     end
   end
 
-  def jwt
-    expiry = Time.zone.now + 5.minutes.to_i
-    body = {
-      sub: user_email,
-      iss: ENV['SPARK_JWT_ISS'],
-      jti: SecureRandom.uuid
-    }
-    Canvas::Security.create_jwt(body, expiry, ENV['SPARK_JWT_SECRET'])
-  end
-
   def enable_spark_params
     { courseId: course_id, courseCode: course_code }
-  end
-
-  def disable_spark_params
-    { courseId: course_id }
   end
 
   def import_whiteboard_params
@@ -117,10 +73,6 @@ class SparkPluginController < ApplicationController
 
   def indent
     params[:indent]
-  end
-
-  def spark_service_url
-    URI.parse("#{ENV['SPARK_SERVICE_URL']}/canvas/")
   end
 
   def permitted_params
