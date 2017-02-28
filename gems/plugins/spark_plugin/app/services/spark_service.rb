@@ -17,34 +17,29 @@ class SparkService
   end
 
   def self.get(url, user_email)
-    return JSON.parse(http.get(
-      url,
-      'Authorization' => 'Bearer ' + jwt(user_email),
-      'Content-type' => 'application/json',
-      'Accept' => 'text/json, application/json').body)
+    return JSON.parse(http.get(url, headers(user_email)).body)
   end
 
   def self.post(url, body, user_email)
-    return http.post(
-      url,
-      JSON.dump(body),
-      'Authorization' => 'Bearer ' + jwt(user_email),
-      'Content-type' => 'application/json',
-      'Accept' => 'text/json, application/json')
+    return http.post(url, JSON.dump(body), headers(user_email))
   end
 
   def self.delete(url, user_email)
-    return http.delete(
-      url,
-      'Authorization' => 'Bearer ' + jwt(user_email),
-      'Content-type' => 'application/json',
-      'Accept' => 'text/json, application/json')
+    return http.delete(url, headers(user_email))
   end
 
   def self.http
     http = Net::HTTP.new(spark_service_url.host, spark_service_url.port)
     http.use_ssl = true if Rails.env.production?
     return http
+  end
+
+  def self.headers(user_email)
+    {
+      'Authorization' => 'Bearer ' + jwt(user_email),
+      'Content-type' => 'application/json',
+      'Accept' => 'text/json, application/json'
+    }
   end
 
   def self.spark_service_url
