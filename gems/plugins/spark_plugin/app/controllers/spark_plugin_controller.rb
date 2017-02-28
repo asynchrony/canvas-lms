@@ -45,9 +45,7 @@ class SparkPluginController < ApplicationController
       'Content-type' => 'application/json',
       'Accept' => 'text/json, application/json')
 
-    respond_to do |format|
-      format.html { redirect_to :back, notice: response_message(response.code)}
-    end
+    handle_response(response)
   end
 
   def post_to_spark_service(endpoint, body)
@@ -60,9 +58,22 @@ class SparkPluginController < ApplicationController
       'Content-type' => 'application/json',
       'Accept' => 'text/json, application/json')
 
+    handle_response(response)
+  end
+
+  def handle_response(response)
+    status_code = response.code.to_i
+
     respond_to do |format|
-      format.html { redirect_to :back, notice: response_message(response.code)}
-      format.json { render json: { status: response.code } }
+      format.html do
+        if status_code >= 200 && status_code < 300
+          redirect_to :back, notice: "Success"
+        else
+          flash[:error] = "Failed (error code #{status_code})"
+          redirect_to :back
+        end
+      end
+      format.json { render json: { status: status_code } }
     end
   end
 
@@ -106,13 +117,6 @@ class SparkPluginController < ApplicationController
 
   def indent
     params[:indent]
-  end
-
-  def response_message(code)
-    status_code = code.to_i
-    return "Processing request. Please refresh momentarily" if status_code == 202
-    return "Success" if (status_code >= 200 && status_code < 300)
-    "Failed (error code #{status_code})"
   end
 
   def spark_service_url
