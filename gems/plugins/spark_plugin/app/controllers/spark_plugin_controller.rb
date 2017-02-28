@@ -3,7 +3,7 @@ require 'jwt'
 class SparkPluginController < ApplicationController
 
   def enable_spark
-    post_to_spark_service("enable-spark", enable_spark_params);
+    post_to_spark_service("spark", enable_spark_params);
   end
 
   def import_whiteboard
@@ -11,7 +11,7 @@ class SparkPluginController < ApplicationController
   end
 
   def disable_spark
-    delete_from_spark_service("enable-spark", disable_spark_params);
+    delete_from_spark_service("spark", disable_spark_params);
   end
 
   def render_enable_spark_button
@@ -22,7 +22,7 @@ class SparkPluginController < ApplicationController
     http.use_ssl = true if Rails.env.production?
 
     response = JSON.parse(http.get(
-    "#{spark_service_url.path}enable-spark/#{@course_id}",
+    "#{spark_service_url.path}spark/#{@course_id}",
     'Authorization' => 'Bearer ' + jwt,
     'Content-type' => 'application/json',
     'Accept' => 'text/json, application/json').body)
