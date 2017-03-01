@@ -20,6 +20,10 @@ class SparkService
     return post("#{spark_service_url.path}courses/#{course_id}/modules/#{module_id}/whiteboard-snapshot", body, user_email)
   end
 
+  def self.get_whiteboards(course_id, module_id, user_email)
+    return get("#{spark_service_url.path}courses/#{course_id}/modules/#{module_id}/whiteboard-snapshots", user_email)
+  end
+
   def self.get(url, user_email)
     return JSON.parse(http.get(url, headers(user_email)).body)
   end

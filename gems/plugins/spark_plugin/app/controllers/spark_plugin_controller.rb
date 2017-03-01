@@ -36,6 +36,19 @@ class SparkPluginController < ApplicationController
     end
   end
 
+  def render_whiteboard_snapshots
+    @module_id = module_id
+    @course_id = course_id
+
+    response = SparkService.get_whiteboard_snapshots(@course_id, @module_id, user_email)
+
+    @whiteboards = response
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
   def handle_response(response)
     status_code = response.code.to_i
 

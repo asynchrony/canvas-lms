@@ -1,0 +1,26 @@
+<span id="display_whiteboard_snapshots"></span>
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    ajax({
+      type: "GET",
+      url: window.location.pathname + "/#{module_id}/whiteboard-snapshots"
+    });
+  });
+
+  function ajax(options){
+    var xhr = new window.XMLHttpRequest();
+
+    var script = document.createElement('script');
+    document.head.appendChild(script);
+
+    xhr.onreadystatechange = function(){
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        script.text = xhr.responseText;
+      }
+    };
+
+    xhr.open(options.type, options.url, true);
+    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    xhr.send();
+  }
+</script>
