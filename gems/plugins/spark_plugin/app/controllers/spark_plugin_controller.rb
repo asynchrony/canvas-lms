@@ -3,17 +3,17 @@ require 'jwt'
 class SparkPluginController < ApplicationController
 
   def enable_spark
-    response = SparkService.create_spark(enable_spark_params, user_email)
+    response = SparkService.create_spark(course_id, enable_spark_params, user_email)
     handle_response(response)
   end
 
   def import_whiteboard
-    response = SparkService.create_whiteboard_link(import_whiteboard_params, user_email)
+    response = SparkService.create_whiteboard_link(course_id, module_id, import_whiteboard_params, user_email)
     handle_response(response)
   end
 
   def disable_spark
-    response = SparkService.delete_spark("spark", course_id, user_email)
+    response = SparkService.delete_spark(course_id, user_email)
     handle_response(response)
   end
 
@@ -48,11 +48,11 @@ class SparkPluginController < ApplicationController
   end
 
   def enable_spark_params
-    { courseId: course_id, courseCode: course_code }
+    { courseCode: course_code }
   end
 
   def import_whiteboard_params
-    { courseId: course_id, moduleId: module_id, indent: indent }
+    { indent: indent }
   end
 
   def course_code

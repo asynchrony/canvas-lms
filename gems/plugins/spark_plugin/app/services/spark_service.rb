@@ -1,19 +1,19 @@
 class SparkService
 
-  def self.create_spark(body, user_email)
-    return post("#{spark_service_url.path}spark", body, user_email)
+  def self.create_spark(course_id, body, user_email)
+    return post("#{spark_service_url.path}courses/#{course_id}/spark", body, user_email)
   end
 
   def self.get_spark(course_id, user_email)
-    return get("#{spark_service_url.path}spark/#{course_id}", user_email)
+    return get("#{spark_service_url.path}courses/#{course_id}/spark", user_email)
   end
 
-  def self.delete_spark(endpoint, course_id, user_email)
-    return delete("#{spark_service_url.path}#{endpoint}/#{course_id}", user_email)
+  def self.delete_spark(course_id, user_email)
+    return delete("#{spark_service_url.path}courses/#{course_id}/spark", user_email)
   end
 
-  def self.create_whiteboard_link(body, user_email)
-    return post("#{spark_service_url.path}whiteboard-snapshot", body, user_email)
+  def self.create_whiteboard_link(course_id, module_id, body, user_email)
+    return post("#{spark_service_url.path}courses/#{course_id}/modules/#{module_id}/whiteboard-snapshot", body, user_email)
   end
 
   def self.get(url, user_email)
