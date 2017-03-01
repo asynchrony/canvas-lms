@@ -7,6 +7,11 @@ class SparkPluginController < ApplicationController
     handle_response(response)
   end
 
+  def enable_spark_for_module
+    response = SparkService.create_spark_for_module(course_id, module_id, user_email)
+    handle_response(response)
+  end
+
   def import_whiteboard
     response = SparkService.create_whiteboard_link(course_id, module_id, import_whiteboard_params, user_email)
     handle_response(response)

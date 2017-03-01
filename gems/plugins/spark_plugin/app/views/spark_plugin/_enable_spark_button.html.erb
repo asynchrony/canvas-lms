@@ -1,11 +1,11 @@
 <% if can_enable %>
   <%= form_tag({ controller: "spark_plugin", action: "enable_spark", course_id: course_id,  method: "post" }, style: "display: inline-block; margin: 0px") do %>
     <%= hidden_field :course, :course_code, value: course_code %>
-    <%= submit_tag "Enable Spark", class: "btn btn-primary" %>
+    <%= submit_tag "Enable Spark", id: "enable_spark", class: "btn btn-primary" %>
   <% end %>
 <% else %>
   <%= form_tag({ controller: "spark_plugin", action: "disable_spark", course_id: course_id,  method: "post" }, style: "display: inline-block; margin: 0px", onsubmit: "return confirm('Are you sure you want to disable Spark?')") do %>
     <%= hidden_field :course, :course_code, value: course_code %>
-    <%= submit_tag "Disable Spark", class: "btn btn-primary" %>
+    <%= submit_tag "Disable Spark", id: "disable_spark", class: "btn btn-primary" %>
   <% end %>
 <% end %>

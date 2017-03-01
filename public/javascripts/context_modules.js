@@ -891,7 +891,16 @@ define([
         return $module;
       },
       success: function(data, $module) {
-        $module.loadingImage('remove');
+        // BEGIN ASYNCHRONY CHANGES
+        if ($('#disable_spark').length > 0) {
+          $.ajaxJSON('modules/' + data.context_module.id + '/spark-enablement', 'POST', {}, function() {
+            window.location.reload();
+          })
+        } else {
+          $module.loadingImage('remove');
+        }
+        // END ASYNCHRONY CHANGES
+
         $module.attr('id', 'context_module_' + data.context_module.id);
         setupContentIds($module, data.context_module.id);
 
