@@ -8,7 +8,7 @@ class SparkPluginController < ApplicationController
   end
 
   def enable_spark_for_module
-    response = SparkService.create_spark_for_module(course_id, module_id, user_email)
+    response = SparkService.create_spark_for_module(course_id, module_id, enable_spark_for_module_params, user_email)
     handle_response(response)
   end
 
@@ -56,12 +56,20 @@ class SparkPluginController < ApplicationController
     { courseCode: course_code }
   end
 
+  def enable_spark_for_module_params
+    { moduleName: module_name }
+  end
+
   def import_whiteboard_params
     { indent: indent }
   end
 
   def course_code
     permitted_params[:course_code]
+  end
+
+  def module_name
+    params[:module_name]
   end
 
   def user_email

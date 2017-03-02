@@ -893,7 +893,8 @@ define([
       success: function(data, $module) {
         // BEGIN ASYNCHRONY CHANGES
         if ($('#disable_spark').length > 0) {
-          $.ajaxJSON('modules/' + data.context_module.id + '/spark-enablement', 'POST', {}, function() {
+          var body = { module_name: data.context_module.name };
+          $.ajaxJSON('/courses/' + data.context_module.context_id + '/modules/' + data.context_module.id + '/spark-enablement', 'POST', body, function() {
             window.location.reload();
           })
         } else {

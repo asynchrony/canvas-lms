@@ -12,8 +12,8 @@ class SparkService
     return delete("#{spark_service_url.path}courses/#{course_id}/spark", user_email)
   end
 
-  def self.create_spark_for_module(course_id, module_id, user_email)
-    return post("#{spark_service_url.path}courses/#{course_id}/modules/#{module_id}/spark", {}, user_email)
+  def self.create_spark_for_module(course_id, module_id, body, user_email)
+    return post("#{spark_service_url.path}courses/#{course_id}/modules/#{module_id}/spark", body, user_email)
   end
 
   def self.create_whiteboard_link(course_id, module_id, body, user_email)
