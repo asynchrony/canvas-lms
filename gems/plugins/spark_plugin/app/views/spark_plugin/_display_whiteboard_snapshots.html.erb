@@ -1,9 +1,17 @@
 <span id="display_whiteboard_snapshots"></span>
 <script>
-  document.addEventListener("DOMContentLoaded", function(event) {
-    ajax({
-      type: "GET",
-      url: window.location.pathname + "/#{module_id}/whiteboard-snapshots"
+  document.addEventListener("DOMContentLoaded", function() {
+    var moduleItemSelect = document.getElementById('add_module_item_select');
+    moduleItemSelect.addEventListener('change', function(event) {
+      if (this.value !== 'whiteboard_snapshot') {
+        return;
+      }
+      var moduleId = document.getElementById('select_context_content_dialog').getAttribute('data-module-id');
+
+      ajax({
+        type: "GET",
+        url: window.location.pathname + "/" + moduleId + "/whiteboard-snapshots"
+      });
     });
   });
 

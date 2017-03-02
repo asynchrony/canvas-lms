@@ -274,10 +274,8 @@
       <% end %>
       <% # BEGIN ASYNCHRONY CHANGES %>
       <% if !only || only.include?(:whiteboard_snapshots) %>
-      <% #eventually this should be pulling a content area created by the plugin, eg: render partial: 'spark_plugin/import_whiteboard_selection_area', locals: { context: @context, context_module: context_module } %>
       <div id="whiteboard_snapshots_select" class="module_item_option" style="margin-bottom: 5px; ">
-        <%= #we need to figure out how to get the module & course ID to the partial in order to pull whiteboards%>
-        <%= #render partial: "spark_plugin/display_whiteboard_snapshots", locals {course_id: ? ,modal_id: ?}%>
+        <%= render partial: "spark_plugin/display_whiteboard_snapshots", locals: {course_id: @context.id} %>
       </div>
       <% end %>
       <% # END ASYNCHRONY CHANGES %>

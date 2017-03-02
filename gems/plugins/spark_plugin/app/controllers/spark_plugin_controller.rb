@@ -40,7 +40,7 @@ class SparkPluginController < ApplicationController
     @module_id = module_id
     @course_id = course_id
 
-    response = SparkService.get_whiteboard_snapshots(@course_id, @module_id, user_email)
+    response = SparkService.get_whiteboards(@course_id, @module_id, user_email)
 
     @whiteboards = response
 
@@ -74,7 +74,7 @@ class SparkPluginController < ApplicationController
   end
 
   def import_whiteboard_params
-    { indent: indent }
+    { indent: indent, selectedSnapshot: selected_snapshot }
   end
 
   def course_code
@@ -95,6 +95,10 @@ class SparkPluginController < ApplicationController
 
   def module_id
     params[:module_id]
+  end
+
+  def selected_snapshot
+    params[:selected_snapshot]
   end
 
   def indent

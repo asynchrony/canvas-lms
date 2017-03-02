@@ -1,3 +1,3 @@
-<% whiteboards.each do |whiteboard|%>
-    <span>URL: <% whiteboard %></span><br/>
+<% whiteboards.each do |whiteboard| %>
+    <input type="radio" name="whiteboard_url" value="<%= whiteboard %>">  <%= whiteboard %><br /><br />
 <% end %>

@@ -205,6 +205,9 @@ define([
           }
         }
       }).fixDialogButtons();
+      // BEGIN ASYNCHRONY CHANGES
+      $("#select_context_content_dialog").attr('data-module-id', options.module_id);
+      // END ASYNCHRONY CHANGES
 
       var visibleModuleItemSelect = $('#select_context_content_dialog .module_item_select:visible')[0];
       if (visibleModuleItemSelect) {

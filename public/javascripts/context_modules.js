@@ -1314,7 +1314,9 @@ define([
       if(INST && INST.selectContentDialog) {
         var id = $(this).parents(".context_module").find(".header").attr("id");
         var name = $(this).parents(".context_module").find(".name").attr("title");
-        var options = {for_modules: true};
+        // BEGIN ASYNCHRONY CHANGES
+        var options = {for_modules: true, module_id: id};
+        // END ASYNCHRONY CHANGES
         options.select_button_text = I18n.t('buttons.add_item', "Add Item");
         options.holder_name = name;
         options.height = 550;
@@ -1329,8 +1331,14 @@ define([
           // Changed the submit to do something special for whiteboard_snapshot and put the regular code into the else
           if (item_data['item[type]'] === 'whiteboard_snapshot') {
             var $module = $("#context_module_" + id);
+
+            var requestBody = {
+              indent: item_data['item[indent]'],
+              selected_snapshot: $('input[name=whiteboard_url]:checked').val()
+            };
+
             $module.disableWhileLoading(
-              $.ajaxJSON('modules/' + id + '/import-whiteboard', 'POST', { indent: item_data['item[indent]'] }, function() {
+              $.ajaxJSON('modules/' + id + '/import-whiteboard', 'POST', requestBody, function() {
                 window.location.reload();
               })
             );
