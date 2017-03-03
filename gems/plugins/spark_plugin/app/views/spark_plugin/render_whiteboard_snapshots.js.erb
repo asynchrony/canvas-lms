@@ -1,1 +1,13 @@
 document.getElementById("display_whiteboard_snapshots").innerHTML = "<%= escape_javascript(render partial: 'whiteboard_snapshots', locals: {course_id: @course_id, module_id: @module_id, whiteboards: @whiteboards})%>";
+
+var radioInputs = document.getElementsByName('whiteboard_url');
+radioInputs.forEach(function(radio) {
+    radio.addEventListener('change', function() {
+        var buttons = document.getElementsByClassName('add_item_button');
+        for (var i = 0; i < buttons.length; i++) {
+            var button = buttons[i];
+            button.classList.remove('disabled');
+            button.setAttribute('aria-disabled', false);
+        }
+    });
+});

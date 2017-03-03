@@ -384,9 +384,7 @@ define([
     $("#add_module_item_select").change(function() {
       // Don't disable the form button for these options
       var selectedOption = $(this).val();
-      // BEGIN ASYNCHRONY CHANGES
-      var doNotDisable = _.contains(['external_url', 'context_external_tool', 'context_module_sub_header', 'whiteboard_snapshot'], selectedOption);
-      // END ASYNCHRONY CHANGES
+      var doNotDisable = _.contains(['external_url', 'context_external_tool', 'context_module_sub_header'], selectedOption);
       if (doNotDisable) {
         $(".add_item_button").removeClass('disabled').attr('aria-disabled', false);
       } else {
