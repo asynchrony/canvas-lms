@@ -207,6 +207,7 @@ define([
       }).fixDialogButtons();
       // BEGIN ASYNCHRONY CHANGES
       $("#select_context_content_dialog").attr('data-module-id', options.module_id);
+      document.getElementById('add_module_item_select').dispatchEvent(new Event('change'));
       // END ASYNCHRONY CHANGES
 
       var visibleModuleItemSelect = $('#select_context_content_dialog .module_item_select:visible')[0];
