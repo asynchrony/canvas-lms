@@ -25,7 +25,7 @@ class SparkService
   end
 
   def self.get(url, user_email)
-    return JSON.parse(http.get(url, headers(user_email)).body)
+    return http.get(url, headers(user_email))
   end
 
   def self.post(url, body, user_email)

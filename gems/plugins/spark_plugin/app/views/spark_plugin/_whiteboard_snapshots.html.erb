@@ -1,3 +1,7 @@
-<% whiteboards.each do |whiteboard| %>
-    <input type="radio" name="whiteboard_url" value="<%= whiteboard %>">  <%= whiteboard %><br /><br />
+<% if !whiteboards || whiteboards.length == 0 %>
+    No whiteboards found.
+<% else %>
+    <% whiteboards.each do |whiteboard| %>
+        <input type="radio" name="whiteboard_url" value="<%= whiteboard %>">  <%= whiteboard %><br /><br />
+    <% end %>
 <% end %>

@@ -27,6 +27,9 @@
       if (xhr.readyState === 4 && xhr.status === 200) {
         script.text = xhr.responseText;
       }
+      else if (xhr.readyState === 4) {
+        document.getElementById('display_whiteboard_snapshots').innerHTML = 'Failed to get whiteboard snapshots.';
+      }
     };
 
     xhr.open(options.type, options.url, true);

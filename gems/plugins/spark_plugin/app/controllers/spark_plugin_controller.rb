@@ -26,7 +26,7 @@ class SparkPluginController < ApplicationController
     @course_id = course_id
     @course_code = Course.find(@course_id).course_code
 
-    response = SparkService.get_spark(@course_id, user_email)
+    response = JSON.parse(SparkService.get_spark(@course_id, user_email).body)
 
     @can_enable = false
     @can_enable = !response["enabled"] unless response["enabled"].nil?
@@ -41,11 +41,15 @@ class SparkPluginController < ApplicationController
     @course_id = course_id
 
     response = SparkService.get_whiteboards(@course_id, @module_id, user_email)
-
-    @whiteboards = response
+    status_code = response.code.to_i
 
     respond_to do |format|
-      format.js
+      if status_code >= 200 && status_code < 300
+        @whiteboards = JSON.parse(response.body)
+        format.js
+      else
+        format.json { render json: response.body, status: status_code }
+      end
     end
   end
 
