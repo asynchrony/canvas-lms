@@ -1,7 +1,24 @@
 <% if !whiteboards || whiteboards.length == 0 %>
     No whiteboards found.
 <% else %>
+  <style>
+    .whiteboard {
+      width: 250px;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      position: relative;
+      float: left;
+      top: 0px;
+      margin: 10px 10px 10px 10px;
+    }
+    .whiteboard.selected {
+      border: 2px solid #00AC18;
+    }
+  </style>
+  <div>
     <% whiteboards.each do |whiteboard| %>
-        <input type="radio" name="whiteboard_url" value="<%= whiteboard %>"><%= whiteboard %><br/><br/>
+      <img id="<%= whiteboard['url'] %>" class="whiteboard" src="data:image/png;base64,<%= whiteboard['image'] %>" />
     <% end %>
+  </div>
+  <br clear="all"/>
 <% end %>

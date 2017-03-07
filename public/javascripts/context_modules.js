@@ -1334,7 +1334,7 @@ define([
 
             var requestBody = {
               indent: item_data['item[indent]'],
-              selected_snapshot: $('input[name=whiteboard_url]:checked').val()
+              selected_snapshot: $('img[class="whiteboard selected"]').attr('id')
             };
 
             $module.disableWhileLoading(

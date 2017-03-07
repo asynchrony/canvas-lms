@@ -1,7 +1,7 @@
 document.getElementById("display_whiteboard_snapshots").innerHTML = "<%= escape_javascript(render partial: 'whiteboard_snapshots', locals: {course_id: @course_id, module_id: @module_id, whiteboards: @whiteboards})%>";
 
-document.getElementsByName('whiteboard_url').forEach(function(radio) {
-    radio.addEventListener('change', function() {
+for (var img of document.getElementsByClassName('whiteboard')) {
+    img.addEventListener('click', function() {
         var buttons = document.getElementsByClassName('add_item_button');
         for (var i = 0; i < buttons.length; i++) {
             var button = buttons[i];
@@ -9,4 +9,4 @@ document.getElementsByName('whiteboard_url').forEach(function(radio) {
             button.setAttribute('aria-disabled', false);
         }
     });
-});
+}
