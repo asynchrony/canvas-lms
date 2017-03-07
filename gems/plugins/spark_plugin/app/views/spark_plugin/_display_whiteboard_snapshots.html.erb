@@ -1,39 +1,45 @@
 <span id="display_whiteboard_snapshots"></span>
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    var moduleItemSelect = document.getElementById('add_module_item_select');
-    moduleItemSelect.addEventListener('change', function(event) {
+    document.getElementById('add_module_item_select').addEventListener('change', function(event) {
       if (this.value !== 'whiteboard_snapshot') {
         return;
       }
-      var moduleId = document.getElementById('select_context_content_dialog').getAttribute('data-module-id');
 
       document.getElementById('display_whiteboard_snapshots').innerHTML = '<img src="/images/ajax-loader.gif" alt="Loading..."/>';
 
-      ajax({
+      ajaxRequest({
         type: 'GET',
-        url: window.location.pathname + '/' + moduleId + '/whiteboard-snapshots'
+        url: window.location.pathname + '/' + document.getElementById('select_context_content_dialog').getAttribute('data-module-id') + '/whiteboard-snapshots'
+      }, function(xhr) {
+        executeScript(xhr.responseText);
+      }, function() {
+        document.getElementById('display_whiteboard_snapshots').innerHTML = 'Failed to get whiteboard snapshots.';
       });
     });
   });
 
-  function ajax(options){
+  function ajaxRequest(options, successCallback, failureCallback) {
     var xhr = new window.XMLHttpRequest();
 
-    var script = document.createElement('script');
-    document.head.appendChild(script);
-
-    xhr.onreadystatechange = function(){
-      if (xhr.readyState === 4 && xhr.status === 200) {
-        script.text = xhr.responseText;
-      }
-      else if (xhr.readyState === 4) {
-        document.getElementById('display_whiteboard_snapshots').innerHTML = 'Failed to get whiteboard snapshots.';
+    xhr.onreadystatechange = function() {
+      if(xhr.readyState === 4) {
+        if(xhr.status === 200){
+          successCallback(xhr);
+        } else {
+          failureCallback();
+        }
       }
     };
 
     xhr.open(options.type, options.url, true);
     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     xhr.send();
+  }
+
+  function executeScript(text) {
+    var script = document.createElement('script');
+    document.head.appendChild(script);
+    script.text = text;
   }
 </script>
