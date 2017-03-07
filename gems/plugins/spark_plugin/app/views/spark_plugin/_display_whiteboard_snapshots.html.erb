@@ -1,6 +1,6 @@
 <span id="display_whiteboard_snapshots"></span>
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
+  document.addEventListener('DOMContentLoaded', function() {
     var moduleItemSelect = document.getElementById('add_module_item_select');
     moduleItemSelect.addEventListener('change', function(event) {
       if (this.value !== 'whiteboard_snapshot') {
@@ -11,8 +11,8 @@
       document.getElementById('display_whiteboard_snapshots').innerHTML = '<img src="/images/ajax-loader.gif" alt="Loading..."/>';
 
       ajax({
-        type: "GET",
-        url: window.location.pathname + "/" + moduleId + "/whiteboard-snapshots"
+        type: 'GET',
+        url: window.location.pathname + '/' + moduleId + '/whiteboard-snapshots'
       });
     });
   });
