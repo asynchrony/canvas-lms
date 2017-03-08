@@ -193,6 +193,9 @@ define([
       }
       $("#select_context_content_dialog #external_urls_select :text").val("");
       $("#select_context_content_dialog #context_module_sub_headers_select :text").val("");
+      // BEGIN ASYNCHRONY CHANGES
+      $("#select_context_content_dialog").attr('data-module-id', options.module_id);
+      // END ASYNCHRONY CHANGES
       $('#add_module_item_select').change();
       $("#select_context_content_dialog .module_item_select").change();
       $("#select_context_content_dialog").dialog({
@@ -205,11 +208,6 @@ define([
           }
         }
       }).fixDialogButtons();
-      // BEGIN ASYNCHRONY CHANGES
-      $("#select_context_content_dialog").attr('data-module-id', options.module_id);
-      document.getElementById('add_module_item_select').dispatchEvent(new Event('change'));
-      // END ASYNCHRONY CHANGES
-
       var visibleModuleItemSelect = $('#select_context_content_dialog .module_item_select:visible')[0];
       if (visibleModuleItemSelect) {
         if (visibleModuleItemSelect.selectedIndex != -1) {

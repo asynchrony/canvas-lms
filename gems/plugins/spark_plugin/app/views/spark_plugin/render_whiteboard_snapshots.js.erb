@@ -1,12 +1,12 @@
-document.getElementById("display_whiteboard_snapshots").innerHTML = "<%= escape_javascript(render partial: 'whiteboard_snapshots', locals: {course_id: @course_id, module_id: @module_id, whiteboards: @whiteboards})%>";
+require([
+  'jquery' /* $ */
+], function($) {
+  $('#display_whiteboard_snapshots').html("<%= escape_javascript(render partial: 'whiteboard_snapshots', locals: {course_id: @course_id, module_id: @module_id, whiteboards: @whiteboards})%>");
 
-for (var img of document.getElementsByClassName('whiteboard')) {
-    img.addEventListener('click', function() {
-        var buttons = document.getElementsByClassName('add_item_button');
-        for (var i = 0; i < buttons.length; i++) {
-            var button = buttons[i];
-            button.classList.remove('disabled');
-            button.setAttribute('aria-disabled', false);
-        }
-    });
-}
+  $('.whiteboard').click(function() {
+    $('.selected').removeClass('selected');
+    $(this).addClass('selected');
+
+    $('.add_item_button').removeClass('disabled').attr('aria-disabled', false);
+  });
+});

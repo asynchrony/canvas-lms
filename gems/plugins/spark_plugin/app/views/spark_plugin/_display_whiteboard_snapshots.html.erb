@@ -1,26 +1,27 @@
 <span id="display_whiteboard_snapshots"></span>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('add_module_item_select').addEventListener('change', function(event) {
-      if (this.value !== 'whiteboard_snapshot') {
-        return;
-      }
-      var moduleId = $('#select_context_content_dialog').attr('data-module-id');
+<% js_block do %>
+  <script type="text/javascript">
+    require([
+      'jquery' /* $ */
+    ], function($) {
+      $(document).ready(function() {
+        $('#add_module_item_select').on('change', function(event) {
+          if (this.value !== 'whiteboard_snapshot') {
+            return;
+          }
+          var moduleId = $('#select_context_content_dialog').attr('data-module-id');
 
-      $('#display_whiteboard_snapshots').html('<img src="/images/ajax-loader.gif" alt="Loading..."/>');
-      $.ajax({
-        type: "GET",
-        url: window.location.pathname + "/" + moduleId + "/whiteboard-snapshots",
-        success: function() {
-          $('.whiteboard').click(function(){
-            $('.selected').removeClass('selected');
-            $(this).addClass('selected');
+          $('#display_whiteboard_snapshots').html('<img src="/images/ajax-loader.gif" alt="Loading..."/>');
+          $.ajax({
+            type: 'GET',
+            url: window.location.pathname + '/' + moduleId + '/whiteboard-snapshots',
+            dataType: 'script',
+            error: function(){
+              $('#display_whiteboard_snapshots').html('Failed to get whiteboard snapshots.');
+            }
           });
-        },
-        error: function(){
-          $('#display_whiteboard_snapshots').html('Failed to get whiteboard snapshots.');
-        }
+        });
       });
     });
-  });
-</script>
+  </script>
+<% end %>
