@@ -12,6 +12,7 @@ services:
       - ./script:/usr/src/app/script/
       - ./public/javascripts/context_modules.js:/usr/src/app/public/javascripts/context_modules.js
       - ./public/javascripts/select_content_dialog.js:/usr/src/app/public/javascripts/select_content_dialog.js
+      - ./tmp:/usr/src/app/tmp
     environment:
       UNICORN_PROCESSES: 4
     env_file:
